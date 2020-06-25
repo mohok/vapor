@@ -121,7 +121,7 @@ func routes(_ app: Application) throws {
 }
 ```
 
-라우터 메소드를 클로저로 표현할 수도 있지만, 범용적인 사용을 위한 다른 방법도 제공됩니다. 그 전에, 툴박스를 통해 생성된 프로젝트 구조를 잠깐 살펴 보겠습니다. 
+라우터 메소드를 클로저로 표현할 수도 있지만 범용적인 사용을 위한 다른 방법도 제공됩니다. 그 전에, 툴박스를 통해 생성된 프로젝트 구조를 잠깐 살펴 보겠습니다. 
 
 서버를 실행하면 Sources/Run/main.swift 파일이 먼저 실행됩니다.  중간에 `try configure(app)` 을 따라가 보겠습니다.
 
@@ -138,7 +138,7 @@ try configure(app) // <<--
 try app.run()
 ```
 
-Sources/App/configure.swift을 열어보면, Application 객체를 인자로 받고 `routes` 메소드가 실행되고 있습니다. `configure` 메소드를 꼭 사용해야 하는 것은 아니지만, 일반적으로 이곳에서 Application 객체를 활용합니다.  다시  `try routes(app)` 메소드를 따라가 routes.swift 파일로 이동해 보겠습니다.
+Sources/App/configure.swift을 열어보면, `routes` 메소드가 실행되고 있습니다. `configure` 메소드를 꼭 사용해야 하는 것은 아니지만, 일반적으로 이곳에서 Application 객체를 활용합니다.  다시  `try routes(app)` 메소드를 따라가 routes.swift 파일로 이동해 보겠습니다.
 
 ```swift
 // configure.swift
@@ -221,8 +221,8 @@ func routes(_ app: Application) throws {
 req는 [Request](https://github.com/vapor/vapor/blob/master/Sources/Vapor/Request/Request.swift)의 약자입니다. 이 객체는 HTTP 요청을 처리합니다. Curl을 활용해 새로 정의한 API를 요청해 보겠습니다.
 
 1. 파라미터를 `:<#parameter#>` 형식으로 정의했습니다. 
-2. HTTP Post 메소드도 쉽게 등록할 수 있습니다. 요청에 대한 응답 또한 사용자가 정의하는 타입으로 반환됩니다.
+2. HTTP POST 메소드도 쉽게 등록할 수 있습니다. 요청에 대한 응답 또한 사용자가 정의하는 타입으로 반환됩니다.
 3. Request 객체를 통한 요청과 응답은 [Content](https://github.com/vapor/vapor/blob/master/Sources/Vapor/Content/Content.swift) 프로토콜을 채택해야 합니다. 이 프로토콜은 Codable, RequestDecodable, ResponseEncodable을 채택하고 있습니다. RequestDecodable, ResponseEncodable 프로토콜은 비동기 처리를 위한 프로토콜입니다. 
-4. Content 프로토콜을 준수하는 타입에 대한 요청은 Request 객체에 의해 [Media Type](https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Content-Type)에 따라 디코딩 될 수 있습니다. 객체를 인코딩하여 응답하는 일 또한 가능합니다.
+4. Content를 채택한 타입에 대한 요청은 Request 객체에 의해 [Media Type](https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Content-Type)에 따라 디코딩될 수 있습니다. 객체를 인코딩하여 응답하는 일 또한 가능합니다.
 
 
