@@ -74,7 +74,7 @@ cd hello
 vapor xcode 
 ```
 
-실행 스킴을 Run, 디바이스를 My Mac으로 설정하고 실행 버튼을 눌러 보겠습니다. 
+실행 스킴을 hello, 디바이스를 My Mac으로 설정하고 실행 버튼을 눌러 보겠습니다. 
 
 ```
 [ NOTICE ] Server starting on http://127.0.0.1:8080
@@ -86,7 +86,7 @@ vapor xcode
 It works!
 ```
 
-페이지를 확인했다면 다시 Xcode로 돌아옵니다. 디버그 콘솔을 보면 우리가 접속했던 로그가 있습니다.(Vapor의 로깅 시스템 [SwiftLog](https://github.com/apple/swift-log)에 기반하고 있습니다.)
+페이지를 확인했다면 다시 Xcode로 돌아옵니다. 디버그 콘솔을 보면 우리가 접속했던 로그가 있습니다(Vapor의 로깅 시스템 [SwiftLog](https://github.com/apple/swift-log)에 기반하고 있습니다).
 
 ```
 [ INFO ] GET /
@@ -230,11 +230,11 @@ req는 [Request](https://github.com/vapor/vapor/blob/master/Sources/Vapor/Reques
 프로젝트에 Sources/Controller/HelloController.swfit 파일을 하나 생성하겠습니다. 그리고 RouteCollection 프로토콜을 채택하겠습니다.
 
 ```swift
-// TodoController.swift
+// HelloController.swfit.swift
 
 import Vapor
 
-final class TodoController: RouteCollection {
+final class HelloController.swfit: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
   
   }
@@ -263,4 +263,5 @@ auth.post("sign-in") { ...
 // POST: /v1/auth/sign-in
 ```
 
-다시 HelloController.swift 파일로 돌아가 더 살펴보겠습니다.
+HelloController.swift 파일로 돌아가 RouteBuilder를 사용해 보겠습니다.
+
