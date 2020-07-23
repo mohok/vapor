@@ -1,8 +1,6 @@
-iOS를 담당하던 제게 백엔드까지 맡아 달라는 회사의 부탁이 있었습니다. 기존 백엔드 개발자의 퇴사 후 새로운 개발자를 구하지 못하는 시간이 길었기 때문입니다. 기존 서버는 Python/Django로 구축되어 있었고 저는 아무것도 모르는 상황이었습니다. 그래서 주류 언어(Python) + 주류 프레임워크(Django)를 학습하는 일보다 비주류 프레임워크(Vapor)만을 학습하는 일이 편하리라 생각하면서 Vapor 4-beta를 시작하게 되었습니다.
+몇달 전 백엔드를 맡아 달라는 회사의 요청이 있었습니다. 기존 서버는 Python/Django로 구축되어 있었고 저는 아무것도 모르는 상황이었습니다. 그래서 주류 언어(Python) + 주류 프레임워크(Django)를 학습하는 일보다 비주류 프레임워크(Vapor)만을 학습하는 일이 편하리라 생각하면서 Vapor 4-beta를 시작하게 되었습니다.
 
-그것은 끔찍한 생각이었습니다. 구현되지 않은 기능이 많았음은 물론이고, 버그에 가까운 동작도 많았습니다. 프레임워크의 문제인지, 작성한 코드의 문제인지 파악하기 어려웠습니다. 그럴 때마다 디스코드의 vapor 채널이 많은 도움이 되었습니다.
-
-현재 vapor 4(이하 vapor)는 공식으로 릴리즈되었습니다. 또, 회사 서비스의 일부분을 담당하고 있습니다. 기존 서버 API 쿼리 튜닝까지 vapor에서 병행하면서 전체에서 담당하는 비율은 높아지는 중입니다. 
+그것은 끔찍한 생각이었습니다. 구현되지 않은 기능이 많았음은 물론이고, 버그에 가까운 동작도 많았습니다. 프레임워크의 문제인지, 작성한 코드의 문제인지 파악하기 어려웠습니다. 그럴 때마다 디스코드의 vapor 채널이 많은 도움이 되었습니다. 현재 vapor 4(이하 vapor)는 공식으로 릴리즈되었습니다. 또, 회사 서비스의 일부분을 담당하고 있습니다. 기존 서버의 API 쿼리 튜닝까지 vapor에서 병행하면서 전체에서 담당하는 비율은 높아지는 중입니다. 
 
 누군가 vapor로 서비스의 메인 서버를 구축하겠다면 선뜻 추천하지는 않을 것입니다. 하지만, 사이드 프로젝트 정도라면, 게다가 클라이언트 개발자로서 서버 프레임워크를 간단히 맛보고 싶은 정도라면 충분히 매력적이라고 생각합니다. 
 
@@ -88,7 +86,7 @@ vapor xcode
 It works!
 ```
 
-페이지를 확인했다면 다시 Xcode로 돌아옵니다. 디버그 콘솔을 보면 우리가 접속했던 로그가 있습니다.(Vapor의 로그는 [SwiftLog](https://github.com/apple/swift-log)에 기반하고 있습니다.)
+페이지를 확인했다면 다시 Xcode로 돌아옵니다. 디버그 콘솔을 보면 우리가 접속했던 로그가 있습니다.(Vapor의 로깅 시스템 [SwiftLog](https://github.com/apple/swift-log)에 기반하고 있습니다.)
 
 ```
 [ INFO ] GET /
@@ -103,7 +101,7 @@ HTTP 요청에 대한 로그는 기본적으로 [ `Log Level` ] `HTTP Method`  /
 ```
 
 
-이 두 경로의 요청에 대한 처리는 Sources/App/routes.swift 에서 확인할 수 있습니다.  HTTP get 메소드 경로 `/` 과,  `/hello` 로 오는 응답에 대한 처리가 정의되어 있습니다. 
+이 두 경로의 요청에 대한 처리는 Sources/App/routes.swift 에서 확인할 수 있습니다.  HTTP get 메소드 `/`,  `/hello` 로 오는 응답에 대한 처리가 정의되어 있습니다. 
 
 ```swift
 // routes.swift
@@ -218,11 +216,51 @@ func routes(_ app: Application) throws {
 }
 ```
 
-req는 [Request](https://github.com/vapor/vapor/blob/master/Sources/Vapor/Request/Request.swift)의 약자입니다. 이 객체는 HTTP 요청을 처리합니다. Curl을 활용해 새로 정의한 API를 요청해 보겠습니다.
+req는 [Request](https://github.com/vapor/vapor/blob/master/Sources/Vapor/Request/Request.swift)의 줄임말 입니다. 이 객체는 HTTP 요청을 처리합니다. Curl을 활용해 새로 정의한 API를 요청해 보겠습니다.
 
-1. 파라미터를 `:<#parameter#>` 형식으로 정의했습니다. 
+1. 파라미터 경로를 `:<#parameter#>` 형식으로 정의했습니다. 
 2. HTTP POST 메소드도 쉽게 등록할 수 있습니다. 요청에 대한 응답 또한 사용자가 정의하는 타입으로 반환됩니다.
 3. Request 객체를 통한 요청과 응답은 [Content](https://github.com/vapor/vapor/blob/master/Sources/Vapor/Content/Content.swift) 프로토콜을 채택해야 합니다. 이 프로토콜은 Codable, RequestDecodable, ResponseEncodable을 채택하고 있습니다. RequestDecodable, ResponseEncodable 프로토콜은 비동기 처리를 위한 프로토콜입니다. 
 4. Content를 채택한 타입에 대한 요청은 Request 객체에 의해 [Media Type](https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Content-Type)에 따라 디코딩될 수 있습니다. 객체를 인코딩하여 응답하는 일 또한 가능합니다.
 
+앞서 HTTP 메소드와 경로를 설정하여 Application 객체에 등록하고, 이 요청에 대한 응답까지 알아봤습니다.
 
+생각해 봅시다. 하나의 프로젝트에 많은 API가 필요할텐데 어떻게 관리해야 할까요? routes 메소드 안에 모두 정의해야 할까요? 이 문제를 해결하기 위해 RoutesBuilder 프로토콜을 살펴보겠습니다.
+
+프로젝트에 Sources/Controller/HelloController.swfit 파일을 하나 생성하겠습니다. 그리고 RouteCollection 프로토콜을 채택하겠습니다.
+
+```swift
+// TodoController.swift
+
+import Vapor
+
+final class TodoController: RouteCollection {
+  func boot(routes: RoutesBuilder) throws {
+  
+  }
+}
+```
+
+새로운 프로토콜 `RouteCollection`과 `RoutesBuilder`가 등장했습니다. 사실 RoutesBuilder는 `app.get("hello") { req -> String in` 와 같이 HTTP 메소드를 Application 객체에 등록할 때 이미 사용하고 있던 프로토콜입니다.  이 프로토콜의 `grouped` 메소드를 사용하면 경로를 그룹으로 관리하거나, 경로에 대한 미들웨어를 한번에 관리할 수 있습니다.
+
+미들웨어는 광범위하게 쓰이는 용어인데, 쉽게 이야기해서 네트워크로 요청을 처리하기 전에 다른 일을 처리하게 만들 수 있습니다.. 예를 들어서, '아! 회원가입을 할 때만 특별한 로그를 남기고 싶다.'는 생각이 들면 RoutesBuilder를 이용해 미들웨어를 하나 등록해 주면 됩니다.
+
+```swift
+let logged = app.groupted(특별한로그미들웨어())
+logged.post("회원가입") { ...
+```
+
+RoutesBuilder는 경로도 그룹으로 만들 수 있습니다.
+
+```swift
+let v1 = app.grouped("v1")
+v1.get("hello") { ...
+
+let auth = v1.grouped("auth")
+auth.post("sign-in") { ...
+
+// GET: /v1/hello
+// POST: /v1/auth/sign-in
+```
+
+다시 HelloController.swift 파일로 돌아가 더 살펴보겠습니다.
