@@ -42,7 +42,7 @@ swift --version
 다음으로는 brew를 이용해 vapor toolbox를 설치합니다. Toolbox는 터미널에서 vapor와 관련된 커맨드를 입력받을 수 있게 만들어 줍니다. 설치 후 `vapor --help`를 입력하면 커맨드를 확인할 수 있습니다.
 
 ```
-brew install vapor/tap/vapor
+brew install vapor
 ```
 
 ## 새 프로젝트 생성
