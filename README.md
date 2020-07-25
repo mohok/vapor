@@ -332,14 +332,29 @@ routes.swift 에서 사용하던 코드 일부를 가져왔습니다.
 이제 HelloController를 사용하기 위해서 Application에 등록해야 합니다. routes.swift에 가서 등록해 보겠습니다.
 
 ```swift
+/// routes.swift
 import Vapor
 
 func routes(_ app: Application) throws {
   try app.register(collection: HelloController())
+  
+  app.routes.all.forEach{ print($0.description) } // 1
 }
 ```
 
+예제 코드가 작동하는 것을 확인할 수 있습니다. 
 
+1. Application 객체에 등록된 Routes들을 Xcode 콘솔에 출력하는 코드를 추가하였습니다. 객체에 등록하는 대신 터미널에 `swift run Run routes` 를 입력하여 출력시킬 수도 있습니다.
+
+   ```
+   +------+------------------+
+   | GET  | /api/hello/:name |
+   +------+------------------+
+   | POST | /api/todos       |
+   +------+------------------+
+   ```
+
+   
 
 
 
