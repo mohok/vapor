@@ -359,3 +359,18 @@ func routes(_ app: Application) throws {
 
 
 # 2. Fluent 4 시작하기
+
+Fleunt는 Swift의 ORM 프레임워크 중 하나입니다. 즉, Vapor를 사용하면서 DB를 다루기 위해 Fluent를 사용하지 않아도 됩니다. 다음의 프레임워크를 함께 사용하는 것도 고려할 수 있습니다.
+
+* [SwifQL](https://github.com/SwifQL/SwifQL)
+* [GraphZahl](https://github.com/nerdsupremacist/GraphZahl) - GraphQL
+
+* 프로젝트에 Fluent 추가
+* 모델 생성 및 마이그레이션
+* 모델간 관계 설정
+* 쿼리
+* Syncronous, Asyncronous, Blocking, Non-blocking
+* Future, Promise, EventLoopFuture, EventLoopPromise
+
+
+
