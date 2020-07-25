@@ -250,7 +250,6 @@ final class HelloController.swfit: RouteCollection {
 let logged = app.groupted(특별한로그미들웨어())
 logged.post("회원가입") { ...
 ```
-S
 RoutesBuilder는 경로도 그룹으로 만들 수 있습니다.
 
 ```swift
