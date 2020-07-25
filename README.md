@@ -155,6 +155,7 @@ public func configure(_ app: Application) throws {
 몇 가지 HTTP 메소드를 더 만들고 Application 객체에 등록해 보겠습니다.
 
 ```swift
+// routes.swift
 import Vapor
 
 func routes(_ app: Application) throws {
@@ -230,7 +231,7 @@ req는 [Request](https://github.com/vapor/vapor/blob/master/Sources/Vapor/Reques
 프로젝트에 Sources/Controller/HelloController.swfit 파일을 하나 생성하겠습니다. 그리고 RouteCollection 프로토콜을 채택하겠습니다.
 
 ```swift
-// HelloController.swfit.swift
+// HelloController.swfit
 
 import Vapor
 
@@ -249,7 +250,7 @@ final class HelloController.swfit: RouteCollection {
 let logged = app.groupted(특별한로그미들웨어())
 logged.post("회원가입") { ...
 ```
-
+S
 RoutesBuilder는 경로도 그룹으로 만들 수 있습니다.
 
 ```swift
@@ -265,3 +266,82 @@ auth.post("sign-in") { ...
 
 HelloController.swift 파일로 돌아가 RouteBuilder를 사용해 보겠습니다.
 
+```swift
+// HelloController.swfit
+import Vapor
+
+final class HelloController: RouteCollection {
+  func boot(routes: RoutesBuilder) throws {
+    // 1
+    let api = routes.grouped("api")
+    // 2
+    api.get("hello", ":name", use: hello)
+    // 3
+    let todos = api.grouped("todos")
+    // 4
+    todos.post(use: todo)
+  }
+  
+  // 2-1
+  func hello(_ req: Request) throws -> String {
+    let name = req.parameters.get("name")!
+    return "Hello, \(name)"
+  }
+  
+  // 4-1
+  func todo(_ req: Request) throws -> Todo {
+    let body = try req.content.decode(Todo.self)
+    return Todo(
+      id: UUID(),
+      title: body.title,
+      content: body.content,
+      createdAt: Date()
+    )
+  }
+  
+  struct Todo: Content {
+    let id: UUID?
+    let title: String
+    let content: String
+    let createdAt: Date?
+  }
+  
+  /*
+  // 2, 2-1
+   curl "http://127.0.0.1:8080/api/hello/teemo"
+
+  
+  // 4, 4-1
+   curl -X "POST" "http://127.0.0.1:8080/api/todos" \
+   -H 'Content-Type: application/json; charset=utf-8' \
+   -d $'{
+   "title": "밥먹기",
+   "content": "삼겹살 3인분"
+   }'
+   */
+}
+
+```
+
+routes.swift 에서 사용하던 코드 일부를 가져왔습니다.
+
+1. "api"를 경로로 추가하는 RouteBuilder를 생성했습니다.
+2. 2.1. api 빌더에 경로를 추가하고 hello 메소드를 사용하여 요청을 처리합니다. 
+3. 1에서 생성한 빌더에 "todos" 경로를 추가했습니다. 이처럼 RouteBuilder에 경로나 미들웨어를 자유롭게 추가할 수 있습니다.
+4. 4.1. 앞서 HTTP body로 전달되는 데이터를 디코딩하기 위해서는 Content 프로토콜을 채택해야 한다고 언급했습니다. Request 객체의 content 프로퍼티를 통하여 Content 타입을 디코딩한 결과를 얻을 수 있습니다.
+
+이제 HelloController를 사용하기 위해서 Application에 등록해야 합니다. routes.swift에 가서 등록해 보겠습니다.
+
+```swift
+import Vapor
+
+func routes(_ app: Application) throws {
+  try app.register(collection: HelloController())
+}
+```
+
+
+
+
+
+# 2. Fluent 4 시작하기
