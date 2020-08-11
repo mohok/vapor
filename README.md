@@ -373,6 +373,33 @@ Fleunt는 Swift의 ORM 프레임워크 중 하나입니다. 즉, Vapor를 사용
 
 * [GraphZahl](https://github.com/nerdsupremacist/GraphZahl) - GraphQL
 
-  
+사실 Fluent는 데이터베이스를 다루는 일에 능숙하지 않다면 다소 난해한 프레임워크입니다. 글을 쓰는 20년 8월인 현재는 릴리즈 초반에 경험했던 *개발용으로 사용하는 것도 불가능할 정도의*   버그는 해결되었습니다. 하지만 타 언어의 유명한 프레임워크에 비해서 지원하는 기능은 *매우*  부족합니다. 이번 챕터를 이해하기 위해서는 SQL과 비동기 프로그래밍에 대한 경험이 다소 필요함을 알립니다.
 
 ## 프로젝트에 Fluent 추가
+
+* [공식 문서](https://docs.vapor.codes/4.0/fluent/overview/)
+
+## 모델 생성 및 마이그레이션
+
+Fluent를 이용해 데이터베이스와 모델을 다루기 위해서는 객체가 Model 프로토콜을 채택해야 합니다.
+
+
+
+## 모델간 관계 설정
+
+* relations...
+
+## 쿼리
+
+Fluent는 직관적인 쿼리 빌더를 제공합니다. Swift 문법에 익숙하다면 누구나 쉽게 쿼리를 작성할 수 있습니다. 
+
+* crud ...
+* filter, sort, join...
+
+문제는 여러 모델을 한번에 다뤄야 할 경우(특히 서브쿼리)에 나타납니다. 구현되지 않은 부분이 존재합니다. 문제는 Fluent에서 어느 수준까지 지원하는지 알 수 없다는 점입니다. 따라서, 복잡한 쿼리의 경우 SQL 쿼리를 직접 작성하는것이 낫다는 결론을 내렸습니다. 
+
+SQL 쿼리를 직접 날리기 위해서 다음의 문서를 참고하십시오.
+
+[SQL Database](https://docs.vapor.codes/4.0/fluent/advanced/#sql-database)
+
+🔴 SQL Injection과 같은 공격에 필수적으로 대비해야 합니다.
