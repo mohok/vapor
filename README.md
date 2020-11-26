@@ -1,11 +1,3 @@
-몇달 전 백엔드를 맡아 달라는 회사의 요청이 있었습니다. 기존 서버는 Python/Django로 구축되어 있었고 저는 아무것도 모르는 상황이었습니다. 그래서 주류 언어(Python) + 주류 프레임워크(Django)를 학습하는 일보다 비주류 프레임워크(Vapor)만을 학습하는 일이 편하리라 생각하면서 Vapor 4-beta를 시작하게 되었습니다.
-
-그것은 끔찍한 생각이었습니다. 구현되지 않은 기능이 많았음은 물론이고, 버그에 가까운 동작도 많았습니다. 프레임워크의 문제인지, 작성한 코드의 문제인지 파악하기 어려웠습니다. 그럴 때마다 디스코드의 vapor 채널이 많은 도움이 되었습니다. 현재 vapor 4(이하 vapor)는 공식으로 릴리즈되었습니다. 또, 회사 서비스의 일부분을 담당하고 있습니다. 기존 서버의 API 쿼리 튜닝까지 vapor에서 병행하면서 전체에서 담당하는 비율은 높아지는 중입니다. 
-
-누군가 vapor로 서비스의 메인 서버를 구축하겠다면 선뜻 추천하지는 않을 것입니다. 하지만, 사이드 프로젝트 정도라면, 게다가 클라이언트 개발자로서 서버 프레임워크를 간단히 맛보고 싶은 정도라면 충분히 매력적이라고 생각합니다. 
-
-몇 가지 간단한 튜토리얼을 공유하고자 합니다. 시작에 도움이 되었으면 좋겠습니다.
-
 # 목차
 
 1. Vapor 4 시작하기
@@ -27,16 +19,21 @@
 
 ## Swift 설치
 
-Vapor를 사용하기 위해서*는 Swift 5.2 이상 버전이 필요합니다. 터미널을 실행하고 다음과 같이 입력하여 버전을 확인할 수 있습니다. Swift 버전이 낮다면 Xcode를 최신 버전으로 업데이트하거나 직접 [패키지를 다운](https://swift.org/download/#releases)받아 설치합니다.
+Vapor를 사용하기 위해서*는 Swift 5.2 이상 버전이 필요합니다. 터미널을 실행하고 다음과 같이 입력하여 버전을 확인할 수 있습니다. Swift 버전이 낮다면 Xcode를 최신 버전으로 업데이트하거나 직접 [패키지를 다운](https://swift.org/download/#releases)받아 설치합니다. 혹은 다음의 레포를 참고하십시오. 
+
+* [swift-setup](https://github.com/pwsacademy/swift-setup)
+
+> [macOS의 경우 10.15 이상](https://forums.swift.org/t/announcement-vapor-4-will-no-longer-support-macos-10-14/33511)이 필요합니다.
+
+> Swift Version Manager를 사용하고 있다면 추가적인 설정이 필요합니다. 사용 안내를 따라 실행할 경우 빌드가 성공하더라도 Release 환경에서 실행이 불가능 할 수 있습니다.
+> * [swiftenv](https://github.com/kylef/swiftenv)
+
 
 ```
 swift --version
-// Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)
-// Target: x86_64-apple-darwin19.4.0
+Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+Target: x86_64-apple-darwin20.1.0
 ```
-
- * [macOS의 경우 10.15 이상](https://forums.swift.org/t/announcement-vapor-4-will-no-longer-support-macos-10-14/33511)
-
 ## Vapor Toolbox 설치
 
 다음으로는 brew를 이용해 vapor toolbox를 설치합니다. Toolbox는 터미널에서 vapor와 관련된 커맨드를 입력받을 수 있게 만들어 줍니다. 설치 후 `vapor --help`를 입력하면 커맨드를 확인할 수 있습니다.
